@@ -1,52 +1,37 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define MAX 1000000
-int isPrime[MAX];
-void sieve()
-{
-    isPrime[0] = 0;
-    isPrime[1] = 0;
-    for (int i = 2; i <= MAX; i++)
-        isPrime[i] = 1;
-    for (int i = 2; i * i <= MAX; i++)
-    {
-        if (isPrime[i])
-        {
-            for (int j = i * i; j <= MAX; j += i)
-                isPrime[j] = 0;
-        }
-    }
-}
-void solve(int n)
-{
-    int ok = 1;
-    for (int i = 2; i <= n; i++)
-    {
-        if (isPrime[i] && isPrime[n - i])
-        {
+#include <iostream>
+   #include <iomanip>
+   #include <cmath>
+   typedef    unsigned long long ull;
+   int gcd(int a, int b)
+   {
+      if (b == 0)
+         return a;
+      return gcd(b, a % b);
+   }
 
-            cout << i << " " << n - i << endl;
-            ok = 0;
-            break;
-        }
-    }
-    if (ok)
-        cout << -1 << endl;
-}
-int main()
-{
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-    sieve();
-    int test;
-    cin >> test;
-    while (test--)
-    {
-        int n;
-        cin >> n;
-        solve(n);
-    }
-
-    return 0;
-}
+   using namespace std;
+   int main()
+   {
+      int test;
+      cin >> test;
+      while (test--)
+      {
+         int a, b, c, n;
+         cin >> a >> b >> c >> n;
+      ull LCM = a * b / gcd(a, b);
+		LCM = LCM * c / gcd(LCM, c);
+      ull l = (ull)pow(10, n - 1);
+      ull p = (ull)pow(10, n);
+         if (LCM >= p)
+            cout << -1 << endl;
+         else
+         {
+            ull tmp = l % LCM;
+            if (tmp == 0)
+               cout << l << endl;
+            else
+               cout << l + LCM - tmp << endl;
+         }
+      }
+      return 0;
+   }
