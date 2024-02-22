@@ -1,37 +1,59 @@
-#include <iostream>
-   #include <iomanip>
-   #include <cmath>
-   typedef    unsigned long long ull;
-   int gcd(int a, int b)
-   {
-      if (b == 0)
-         return a;
-      return gcd(b, a % b);
-   }
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> v;
 
-   using namespace std;
-   int main()
+void solve(vector<int>& v, int n)
+{
+   int r[n], c[n];
+   memset(r, 0, sizeof(r));
+   memset(c, 0, sizeof(c));
+
+   for (int i = 0; i < n; i++)
    {
-      int test;
-      cin >> test;
-      while (test--)
+      for (int j = 0; j < n; j++)
       {
-         int a, b, c, n;
-         cin >> a >> b >> c >> n;
-      ull LCM = a * b / gcd(a, b);
-		LCM = LCM * c / gcd(LCM, c);
-      ull l = (ull)pow(10, n - 1);
-      ull p = (ull)pow(10, n);
-         if (LCM >= p)
-            cout << -1 << endl;
-         else
-         {
-            ull tmp = l % LCM;
-            if (tmp == 0)
-               cout << l << endl;
-            else
-               cout << l + LCM - tmp << endl;
-         }
+         r[i] += v[i*n+j];
+         c[j] += v[i*n+j];
       }
-      return 0;
    }
+   int mx = 0, cn = 0;
+   for (int i = 0; i < n; i++)
+   {
+      mx = max(r[i], mx);
+      mx = max(c[i], mx);
+   }
+   int mn = 0;
+   for (int i = 0, j = 0; i < n && j < n;)
+   {
+      mn = min(mx - r[i], mx - c[j]);
+
+      r[i] += mn;
+
+      c[j] += mn;
+      if (r[i] == mx)
+         i++;
+      if (c[j] == mx)
+         j++;
+      cn += mn;
+   }
+   cout << cn << endl;
+}
+int main()
+{
+   system("cls");
+   int T;
+   cin >> T;
+   while (T--)
+   {
+      int N;
+      cin >> N;
+      v.resize(N*N);
+      for (int i = 0; i < N; i++)
+      {
+         for (int j = 0; j < N; j++)
+            cin >> v[i*N+j];
+      }
+      solve(v, N);
+   }
+   return 0;
+}
