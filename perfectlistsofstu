@@ -1,0 +1,69 @@
+#include <bits/stdc++.h>
+using namespace std;
+int generateId()
+{
+    static int i = 0;
+    ++i;
+    return i;
+}
+string better(string word)
+{
+    word[0]=toupper(word[0]);
+    for(int i=1;i<word.size();i++)
+    word[i]=tolower(word[i]);
+    return word;
+}
+string standize(string name)
+{
+    stringstream ss(name);
+    string word,res="";
+    while(ss>>word)
+    {
+        res+=better(word)+" ";
+    }
+    return res;
+
+}
+struct SinhVien
+{
+    string code = "B20DCCN", name, cla, date;
+    float gpa;
+    friend istream &operator>>(istream &is, SinhVien &x)
+    {
+        cin.ignore();
+        getline(is, x.name);
+        getline(is, x.cla);
+        getline(is, x.date);
+        is >> x.gpa;
+        return is;
+    }
+    friend ostream &operator<<(ostream &out, SinhVien x)
+    {
+        int idx = generateId();
+        string s = to_string(idx);
+         s = string(3 - s.size(), '0') + s;
+         x.name=standize(x.name);
+        if(x.date[1]=='/') x.date.insert(0,"0");
+        if(x.date[4]=='/') x.date.insert(3,"0");
+        x.code = x.code + s;
+        out << x.code << " " << x.name  << x.cla << " " <<x.date<<" "<<fixed<<setprecision(2)<<x.gpa<<endl;
+        return out;
+    }
+};
+
+int main()
+{
+    SinhVien ds[50];
+    int N, i;
+    cin >> N;
+    for (i = 0; i < N; i++)
+    {
+        cin >> ds[i];
+    }
+    for (i = 0; i < N; i++)
+    {
+        cout << ds[i];
+    }
+
+    return 0;
+}
