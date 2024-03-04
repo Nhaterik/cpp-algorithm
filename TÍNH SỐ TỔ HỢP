@@ -1,0 +1,63 @@
+TÍNH SỐ TỔ HỢP
+
+Bài làm tốt nhất
+Cho hai số n và r, hãy tìm C(n, r)% P. Trong đó, P = 109+7.
+
+Input:
+
+Dòng đầu tiên đưa vào số lượng test T.
+Những dòng kế tiếp đưa vào các bộ test. Mỗi test là bộ đôi n, r. Các số được viết cách nhau một vài khoảng trống.
+T, n, r thỏa mãn ràng buộc : 1≤T≤100; 0≤n≤103; 1≤ r ≤800.
+Output:
+
+Đưa ra kết quả mỗi test theo từng dòng.
+Input:
+
+Output:
+
+2
+3  2
+
+4  2
+
+ 
+
+3
+
+6
+................
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD 1000000007;
+long long  c[1001][1001];
+void sieve()
+{
+    for (int i = 0; i < 1001; i++)
+    {
+        for (int j = 0; j <=i; j++)
+        {
+            if (j == 0 || j == i)
+                c[i][j] = 1;
+            else
+            {
+                c[i][j] = c[i - 1][j] + c[i - 1][j - 1];
+                 c[i][j] %= MOD;
+            }
+        }
+    }
+}
+
+    int main()
+    {
+        int t;
+        cin >> t;
+sieve();
+        while (t--)
+        {
+            int n, k;
+            cin >> n >> k;
+            cout<<c[n][k]<<endl;
+        }
+        return 0;
+    }
+
