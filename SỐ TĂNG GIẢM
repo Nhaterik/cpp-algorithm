@@ -1,0 +1,59 @@
+// created by Pham Van Nhat (Speed)
+#include <bits/stdc++.h>
+
+using namespace std;
+using ll = long long;
+bool isPrime(int n)
+{
+    if(n<2) return 0;
+	for(int i=2;i<=sqrt(n);i++)
+    if(n%i==0) return 0;
+	return 1;
+}
+int isIncandDec(int n)
+{
+   int n1=n%10; n/=10;
+   int n2=n%10; n/=10;
+   if(n1==n2) return 0;
+
+  else if(n1<n2)
+  {
+    while( n!=0)
+    {
+        if(n2>=n%10) return 0;
+        n2=n%10;
+        n/=10;
+    }
+  }
+  else if(n1>n2)
+  {
+    while( n!=0)
+    {
+         if(n2<=n%10) return 0;
+        n2=n%10;
+        n/=10;
+    }
+  }
+  return 1;
+  
+
+}
+
+int main()
+{
+    int t; cin>>t;
+    while(t--)
+{
+    int n; cin>>n;
+    int l=pow(10,n-1);
+    int q=pow(10,n);
+    int cn=0;
+    for(int i=l;i<q;i++)
+    if(isIncandDec(i) && isPrime(i) )
+    cn++;
+    cout<<cn<<endl;
+
+}
+
+    return 0;
+}
