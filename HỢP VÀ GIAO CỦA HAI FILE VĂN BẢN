@@ -1,0 +1,40 @@
+//created by Pham Van Nhat (Speed)
+#include <bits/stdc++.h>
+
+using namespace std;
+using ll = long long;
+void normal(string &s)
+{
+    for (int i = 0; i < s.size(); i++)
+        s[i] = tolower(s[i]);
+}
+
+int main()
+{
+    ifstream isf1;
+    ifstream isf2;
+    isf1.open("DATA1.in");
+    isf2.open("DATA2.in");
+    set<string> collec,inters,s1,s2;
+    string word;
+    while (isf1 >> word)
+    {
+        normal(word);
+        s1.insert(word);
+        collec.insert(word);
+    }
+    while (isf2 >> word)
+    {
+        normal(word);
+        collec.insert(word);
+        if(s1.find(word)!=s1.end())
+        inters.insert(word);
+    }
+
+    for (auto it : collec)
+        cout << it<<" ";
+        cout<< endl;
+    for (auto it : inters)
+        cout << it << " ";
+    return 0;
+}
