@@ -1,0 +1,80 @@
+
+
+
+Cho ma trận vuông A cỡ N*N. Một ma trận vuông B nhỏ hơn cỡ M*M có thể dùng làm “cửa sổ trượt” trên ma trận A nếu M là ước số của N.
+
+Hãy thực hiện tính tích chập của ma trận B với từng “khung cửa số” tương ứng trên ma trận A. Tích chập được hiểu là tính giá trị tích từng vị trí tương ứng trên 2 ma trận kích thước bằng nhau.
+
+Xem ví dụ để hiểu rõ hơn.
+
+Input
+
+Dòng đầu ghi số N (3 < N < 100) . Tiếp theo là N dòng ghi ma trận A. Các giá trị đều nguyên dương và không quá 1000.
+
+Tiếp theo là một dòng ghi số M (1 < M <10). Tiếp theo là M dòng ghi ma trận B. Các giá trị lớn hơn hoặc bằng 0 và không quá 20.
+
+Dữ liệu vào đảm bảo M là ước số của N. 
+
+Output
+
+Ghi ra N dòng mô tả ma trận kết quả.
+
+Ví dụ
+
+Input
+
+
+
+4
+
+1 2 3 4
+
+5 6 7 8
+
+9 10 11 12
+
+13 14 15 16
+
+2
+
+1 0
+
+0 2
+Output
+1 0 3 0
+
+0 12 0 16
+
+9 0 11 0
+
+0 28 0 32
+.........
+// coded by NhatErik
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int n, m;
+    cin >> n;
+    int a[n][n], res[n][n];
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            cin >> a[i][j];
+    cin >> m;
+    int b[m][m];
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < m; j++)
+            cin >> b[i][j];
+    for (int i = 0; i < n; i += m)
+        for (int j = 0; j < m; j++)
+            for (int k = 0; k < n; k++)
+                res[i + j][k] = a[i + j][k] * b[j][(int)(k % m)];
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+            cout << res[i][j] << " ";
+        cout << endl;
+    }
+    return 0;
+}
