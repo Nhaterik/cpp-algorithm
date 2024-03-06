@@ -69,7 +69,7 @@ int main()
     for (int i = 0; i < n; i += m)
         for (int j = 0; j < m; j++)
             for (int k = 0; k < n; k++)
-                res[i + j][k] = a[i + j][k] * b[j][(int)(k % m)];
+                res[i + j][k] = a[i + j][k] * b[j][k % m];
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
