@@ -1,0 +1,62 @@
+Cho ma trận A[N][M] chỉ bao gồm các số 0 và 1. Hãy tìm hình chữ nhật lớn nhất có các phần tử đều bằng 1 bằng cách tráo đổi các cột của ma trận với nhau.Ví dụ với ma trận dưới đây ta sẽ có hình chữ nhật lớn nhất có các phần tử là 1 bằng 6.
+
+    0 1 0 1 0       0 0 1 1 0
+
+    0 1 0 1 1       0 0 1 1 1
+
+    1 1 0 1 0       1 0 1 1 0
+
+    Input :
+
+    Dòng đầu tiên đưa vào số lượng bộ test T.Những dòng kế tiếp đưa vào T bộ test.Mỗi bộ test gồm hai dòng : Dòng đầu tiên đưa vào hai số N,
+    M;
+dòng tiếp là N×M các phần tử của ma trận A[][];
+các phần tử được viết cách nhau một vài khoảng trống.T, N, M thỏa mãn ràng buộc : 1≤T≤100;
+1≤ N, M ≤15. Output :
+
+    Đưa ra kết quả mỗi test theo từng dòng.
+....
+#include <bits/stdc++.h>
+using namespace std;
+int n, m;
+
+
+int solve(vector <vector<int>> &v)
+{
+    vector<vector<int>> subv(n,vector<int>(m));
+    for(int j=0;j<m;j++) subv[0][j]=v[0][j];
+    for(int j=0;j<m;j++)
+    {
+        for(int i=1;i<n;i++)
+        {
+            if(v[i][j]==0) subv[i][j]=0;
+            else subv[i][j]=subv[i-1][j]+v[i][j];
+        }
+    }
+    for(int i=0;i<n;i++)
+    sort(subv[i].begin(),subv[i].end(),greater<int>());
+ 
+    int res=-1;
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<m;j++)
+        res=max(res,(j+1)*subv[i][j]);
+    }
+    return res;
+}
+int main()
+{
+    int T;
+    cin >> T;
+    while (T--)
+    {
+        cin >> n >> m;
+        vector<vector<int>> v(n, vector<int>(m));
+
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                cin >> v[i][j];
+                cout<<solve(v)<<endl;
+    }
+    return 0;
+}
