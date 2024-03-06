@@ -1,0 +1,38 @@
+//coded by NhatErik (Speed)
+#include <bits/stdc++.h>
+using namespace std;
+int n, l, r;
+int check(int a[])
+{
+    int i = l + 1, ok = 0;
+    while (a[i - 1] <= a[i])
+    {
+        if(r==i) return 1;
+        ok = 1;
+        i++;
+    }
+    while (a[i - 1] >= a[i] && ok)
+       {
+        if(r==i) return 1;
+         i++;
+       }
+    return r+1 == i;
+}
+int main()
+{
+    ll t;
+    cin >> t;
+    while (t--)
+    {
+        cin >> n;
+        int a[n];
+        for (int &x : a)
+            cin >> x;
+        cin >> l >> r;
+        if (check(a))
+            cout << "Yes\n";
+        else
+            cout << "No\n";
+    }
+    return 0;
+}
