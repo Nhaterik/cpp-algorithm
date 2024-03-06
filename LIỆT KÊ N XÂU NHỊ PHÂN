@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+void gBinary(int n,string res)
+{
+    if(res.size()==n)
+    {
+        cout<<res<<" ";
+        return;
+    }
+    gBinary(n,res+"0");
+    gBinary(n,res+"1");
+}
+
+int main()
+{
+   int t; cin>>t;
+   while (t--)
+   {
+    int n; cin>>n;
+    gBinary(n,"");
+    cout<<endl;
+   }
+ 
+    return 0;
+}
