@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+using namespace std;
+// psum[i][j] i is row from 1 to i and j is col from 1 to j.
+int main()
+{
+    int n,m;
+    cin >> n>>m;
+    int a[n+1][m+1];
+    for(int i=1;i<=n;i++)
+    for(int j=1;j<=m;j++) cin>>a[i][j];
+    int presum[n+1][m+1];
+    memset(presum,0,sizeof(presum));
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=1;j<=m;j++)
+       {
+         presum[i][j]=presum[i-1][j]+presum[i][j-1]+a[i][j]-presum[i-1][j-1];
+         cout<<presum[i][j]<<" i="<<i<<" j="<<j<<endl;
+       }
+       cout<<"come to new i\n";
+    }
+
+    return 0;
+}
