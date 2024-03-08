@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+string solve(string a, string b)
+
+{
+    int l1=a.size(),l2=b.size(),i=0,j=0;
+ vector <int> res(l1+l2,0);
+ for(int p=l1-1;p>=0;p--)
+ {
+    int n1=a[p]-'0',carry=0;
+    for(int k=l2-1;k>=0;k--)
+    {
+        int n2=b[k]-'0';
+        int s=n1*n2+res[i+j]+carry;
+        res[i+j]=s%10;
+        carry=s/10;
+        j++;
+    }
+    if(carry) res[i+j]=carry;
+    i++,j=0;
+ }
+ int l=res.size()-1;
+ while(l>=0 && res[l]==0)
+ l--;
+ string s="";
+ while(l>=0)
+s+=to_string(res[l--]);
+return s;
+}
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        string x, y;
+        cin >> x >> y;
+       
+            
+        cout << solve(x, y) << endl;
+    }
+    return 0;
+}
