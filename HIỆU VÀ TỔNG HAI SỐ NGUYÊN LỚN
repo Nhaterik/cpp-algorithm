@@ -1,6 +1,32 @@
 Hieu--->
 #include <bits/stdc++.h>
 using namespace std;
+string diff(string x, string y)
+{
+    if (x.size() < y.size() || x.size() == y.size() && x < y)
+        swap(x, y);
+    int l1 = x.size(), l2 = y.size(), carry = 0;
+    y = string(l1 - l2, '0') + y;
+    for (int i = l1-1; i >=0; i--)
+    {
+        int d = x[i] - y[i] - carry;
+        if (d < 0)
+        {
+            d += 10;
+
+            carry = 1;
+        }
+        else
+        {
+
+            carry = 0;
+        }
+        x[i] = (d % 10) + '0';
+    }
+    
+
+    return x;
+}
 
 int main()
 {
@@ -8,35 +34,9 @@ int main()
     cin >> t;
     while (t--)
     {
-        string s1,s2,res="";
-        cin >> s1>>s2;
-       int l1=s1.size(),l2=s2.size();
-       if(l1<l2 || (s1<s2 && l1==l2)) swap(s1,s2);
-       l1=s1.size(),l2=s2.size();
-       int i=0,j=0,s=0,remainder=0;
-       s2=string(l1-l2,'0')+s2;
-       l2=s2.size();
-       reverse(s1.begin(),s1.end());
-       reverse(s2.begin(),s2.end());
-        while(i<l1)
-        {
-            s=s1[i]-(s2[j]+remainder);
-            if(s<0) 
-            {
-                remainder=1;
-                s+=10;
-                
-            }
-            else 
-            {
-                remainder=0;
-                
-            }
-            res+=s+'0';
-            i++,j++;
-        }
-        reverse(res.begin(),res.end());
-        cout<<res<<endl;
+        string s1, s2;
+        cin >> s1 >> s2;
+        cout << diff(s1, s2) << endl;
     }
     return 0;
 }
