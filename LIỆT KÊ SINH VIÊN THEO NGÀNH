@@ -1,0 +1,159 @@
+Thông tin về mỗi sinh viên gồm:
+
+Mã sinh viên: dãy ký tự không có khoảng trống (không quá 15). Đảm bảo không trùng nhau.
+Họ và tên: độ dài không quá 100
+Lớp: dãy ký tự không có khoảng trống (không quá 15)
+Email: dãy ký tự không có khoảng trống (không quá 50)
+Hãy nhập danh sách sinh viên và liệt kê sinh viên theo ngành học. Chú ý: dữ liệu ngành học thể hiện qua 4 chữ cái từ thứ 4 đến thứ 7 trong mã sinh viên.
+
+Input
+
+Dòng đầu ghi số sinh viên (không quá 1000)
+
+Mỗi sinh viên ghi trên 4 dòng lần lượt là: mã, họ tên, lớp, email.
+
+Sau đó sẽ có giá trị số Q là số truy vấn
+
+Tiếp theo là Q dòng, mỗi dòng ghi ngành đào tạo. Chỉ có các ngành đào tạo trong danh sách sau (trong Input sẽ không có dấu):
+
+Kế toán – mã sinh viên có cụm ký tự DCKT
+Công nghệ thông tin – mã sinh viên có cụm DCCN – trừ đi các sinh viên lớp bắt đầu bằng chữ E
+An toàn thông tin – mã sinh viên có cụm DCAT – trừ các sinh viên lớp bắt đầu bằng chữ E
+Viễn thông – mã sinh viên có cụm DCVT
+Điện tử - mã sinh viên có cụm DCDT
+Output
+
+Với mỗi truy vấn, liệt kê danh sách sinh viên của khóa đó theo mẫu như trong ví dụ. Mỗi sinh viên ghi trên một dòng, các thông tin cách nhau một khoảng trống. Thứ tự sinh viên vẫn giữ nguyên như thứ tự ban đầu.  
+
+Ví dụ
+
+Input
+
+
+
+4
+
+B16DCCN011
+
+Nguyen Trong Duc Anh
+
+D16CNPM1
+
+sv1@stu.ptit.edu.vn
+
+B15DCCN215
+
+To Ngoc Hieu
+
+D15CNPM3
+
+sv2@stu.ptit.edu.vn
+
+B15DCKT150
+
+Nguyen Ngoc Son
+
+D15CQKT02-B
+
+sv3@stu.ptit.edu.vn
+
+B15DCKT199
+
+Nguyen Trong Tung
+
+D15CQKT02-B
+
+sv4@stu.ptit.edu.vn
+
+1
+
+Ke toan
+Output
+DANH SACH SINH VIEN NGANH KE TOAN:
+
+B15DCKT150 Nguyen Ngoc Son D15CQKT02-B sv3@stu.ptit.edu.vn
+
+B15DCKT199 Nguyen Trong Tung D15CQKT02-B sv4@stu.p
+******************************************************************************************************************************************************************************************************************
+#include <bits/stdc++.h>
+using namespace std;
+
+struct stu
+{
+    string code, name, cl, email, major;
+    friend istream &operator>>(istream &is, stu &x)
+    {
+        getline(is, x.code);
+        getline(is, x.name);
+        getline(is, x.cl);
+        getline(is, x.email);
+        x.major = x.code.substr(5, 2);
+        return is;
+    }
+    friend ostream &operator<<(ostream &os, stu x)
+    {
+        os << x.code << " " << x.name << " " << x.cl << " " << x.email << endl;
+        return os;
+    }
+};
+void Up(string &s)
+{
+    stringstream ss(s);
+    string f, se;
+    getline(ss, f, ' ');
+    getline(ss, se, ' ');
+
+    s = string(1, toupper(f[0])) + string(1, toupper(se[0]));
+}
+int main()
+{
+    int n;
+    cin >> n;
+    cin.ignore();
+
+    stu l[n];
+    for (int i = 0; i < n; i++)
+        cin >> l[i];
+    int q;
+    cin >> q;
+    cin.ignore();
+    while (q--)
+    {
+        string s, key;
+        getline(cin, s);
+        Up(s);
+        key=s;
+    if (key == "KT")
+    {
+        key = "KE TOAN";
+    }
+    else if (key == "CN")
+    {
+        key = "CONG NGHE THONG TIN";
+    }
+    else if (key == "AT")
+    {
+        key = "AN TOAN THONG TIN";
+    }
+    else if (key == "VT")
+    {
+        key = "VIEN THONG";
+    }
+    else if (key == "DT")
+    {
+        key = "DIEN TU";
+    }
+    cout << "DANH SACH SINH VIEN NGANH " << key << ":" << endl;
+    for (int i = 0; i < n; i++)
+    {
+        if (s == "AT" || s == "CN")
+        {
+            if ((l[i].cl.find('E')==string::npos) && l[i].major==s)
+            cout<<l[i];
+        }
+        else if(l[i].major==s)
+        cout<<l[i];
+    }
+    }
+    return 0;
+}
