@@ -1,0 +1,68 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n, m,s=0;
+        cin >> n >> m;
+        int a[n][m], k[3][3];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                cin >> a[i][j];
+        for (int i=0;i<3;i++)
+        for(int j=0;j<3;j++) cin>>k[i][j];
+        int limit1=n-2,limit2=m-2;
+        for(int i=0;i<limit1;i++)
+        {
+            for(int j=0;j<limit2;j++)
+            {
+                int runner1=i+3,runner2=j+3;
+                for(int p=i;p<runner1;p++)
+                {
+                    for(int q=j;q<runner2;q++)
+                    s+=a[p][q]*k[p-i][q-j];
+                }
+            }
+        }
+        cout<<s<<endl;
+    }
+}
+.............
+.............
+.............
+.............
+above code is the 3*3 size of k
+this is the l*l size of k
+.............
+.............
+#include <bits/stdc++.h>
+using namespace std;
+#define f(i, a, b) for (int i = a; i < b; i++)
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n, m, l;
+        cin >> n >> m >> l;
+        int a[n][m] ;
+        long long s;
+        f(i, 0, n) f(j, 0, m) cin >> a[i][j];
+        int l1 = n - l+1, l2 = m - l+1;
+        f(i, 0, l1)
+        {
+            f(j, 0, l2)
+            {
+            s=0;
+                int r1 = i + l, r2 = j + l;
+                f(p, i, r1) f(q, j, r2) s += a[p][q];
+                cout << s / (l * l) << " ";
+            }
+            cout << endl;
+        }
+    }
+}
