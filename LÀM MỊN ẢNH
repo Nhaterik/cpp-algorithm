@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define f(i, a, b) for (int i = a; i <= b; i++)
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n, m, l;
+        cin >> n >> m >> l;
+        int a[n + 1][m + 1], dp[n + 1][m + 1];
+        memset(dp, 0, sizeof(dp));
+        long long s;
+        f(i, 1, n)
+        {
+            f(j, 1, m)
+            {
+                cin >> a[i][j];
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1] - dp[i - 1][j - 1] + a[i][j];
+            }
+        }
+        int l1 = n - l + 1, l2 = m - l + 1;
+        f(i, 1, l1)
+        {
+            f(j, 1, l2)
+            {
+                int h1 = i, h2 = i + l - 1, c1 = j, c2 = j + l - 1;
+                s = dp[h2][c2] - dp[h1 - 1][c2] - dp[h2][c1 - 1] + dp[h1 - 1][c1 - 1];
+                cout << s / (l * l) << " ";
+            }
+            cout << endl;
+        }
+    }
+}
