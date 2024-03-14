@@ -15,7 +15,7 @@ int main()
     ifstream isf2;
     isf1.open("DATA1.in");
     isf2.open("DATA2.in");
-    set<string> collec,inters,s1,s2;
+    set<string> collec,inters,s1;
     string word;
     while (isf1 >> word)
     {
