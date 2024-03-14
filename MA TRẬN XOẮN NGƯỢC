@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n, m;
+        cin >> n >> m;
+        int res[n*m], a[n][m];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                cin >> a[i][j];
+        int h1 = 0, h2 = n, c1 = 0, c2 = m, k = 0;
+        while (h1 < h2 && c1 < c2)
+        {
+            for (int i = c1; i < c2; i++)
+                res[k++] = a[h1][i];
+             h1++;
+            for (int i = h1; i < h2; i++)
+                res[k++] = a[i][c2 - 1];
+                c2--;
+            if (h1 < h2 )
+            {
+                for (int i = c2 - 1; i >= c1; i--)
+                    res[k++] = a[h2 - 1][i];
+                h2--;
+            }
+            if (c1 < c2 )
+            {
+                for (int i = h2 - 1; i >= h1; i--)
+                    res[k++] = a[i][c1];
+                c1++;
+            }
+
+        }
+        for(int i=n*m-1;i>=0;i--)
+        cout<<res[i]<<" ";
+        cout<<endl;
+    }
+
+    return 0;
+}
