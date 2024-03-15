@@ -1,0 +1,84 @@
+
+
+Bài làm tốt nhất
+Cho ma trận A[N][M] chỉ bao gồm các số 0 và 1. Hãy tìm hình chữ nhật lớn nhất có các phần tử đều bằng 1. Ví dụ với ma trận dưới đây ta sẽ có hình chữ nhật lớn nhất có các phần tử là 1 bằng 8.
+
+0          1          1          0                     
+
+1          1          1          1                      1          1          1          1
+
+1          1          1          1                      1          1          1          1
+
+1          1          0          0
+
+Input:
+
+Dòng đầu tiên đưa vào số lượng bộ test T.
+Những dòng kế tiếp đưa vào T bộ test. Mỗi bộ test gồm hai dòng: Dòng đầu tiên đưa vào hai số N, M ; dòng tiếp là N×M các phần tử của ma trận A[][]; các phần tử được viết cách nhau một vài khoảng trống.
+T, N, M thỏa mãn ràng buộc: 1≤T≤100; 1≤ N, M ≤500.
+Output:
+
+Đưa ra kết quả mỗi test theo từng dòng.
+................
+#include <bits/stdc++.h>
+using namespace std;
+int n, m;
+int mx(int a[])
+{
+    int i = 0, res = 0;
+    stack<int> st;
+    while (i < m)
+    {
+        if (st.empty() || a[i] >= a[st.top()])
+            st.push(i++);
+        else
+        {
+            int idx = st.top();
+            st.pop();
+            if (st.empty())
+                res = max(res, i * a[idx]);
+            else
+
+                res = max(res, (i - st.top() - 1) * a[idx]);
+        }
+    }
+    while (!st.empty())
+    {
+
+        int idx = st.top();
+        st.pop();
+         if (st.empty())
+                res = max(res, i * a[idx]);
+                else
+        res = max(res, (i - st.top() - 1) * a[idx]);
+    }
+    return res;
+}
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int ans = 0;
+        cin >> n >> m;
+        int a[n][m], dp[n][m];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+            {
+                cin >> a[i][j];
+                if (i == 0)
+                    dp[i][j] = a[i][j];
+                else if (a[i][j])
+                    dp[i][j] = dp[i - 1][j] + 1;
+                else
+                    dp[i][j] = 0;
+            }
+        for (int i = 0; i < n; i++)
+        {
+            ans = max(ans, mx(dp[i]));
+        }
+
+        cout << ans << endl;
+    }
+}
