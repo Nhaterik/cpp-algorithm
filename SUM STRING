@@ -1,0 +1,84 @@
+Cho xâu ký tự S bao gồm các chữ số. Xâu S được gọi là Sum String nếu tồn tại một số tự nhiên k>2 sao cho ta có thể chia xâu S thành k xâu con khác nhau S =(S1, S2, ..Sk) sao cho các số được tạo bởi các xâu con thỏa mãn điều kiện  Si=Si-1 + Si-2 (i=3, 4, .., k). Ví dụ xâu S =”123415538” là một Sum String vì tồn tại số k = 3 để phân tích xâu S thành 3 xâu con S = (“123”, “415”,”538”) thỏa mãn 123 + 414 = 538. Tương tự như vậy xâu S=”12345” không phải là một Sum String.
+
+Hãy kiểm tra xem S có phải là xâu Sum String hay không?
+
+Input:
+
+Dòng đầu tiên đưa vào số lượng test T.
+Những dòng kế tiếp đưa vào các test. Mỗi test là một xâu ký tự số S.
+T và S thỏa mãn ràng buộc 1≤T≤100, 3≤length(S)≤105.
+Output:
+
+Đưa ra kết quả mỗi test theo từng dòng.
+Input:
+
+
+
+3
+
+123415538
+
+12345
+
+1122335588143
+Output:
+Yes
+
+No
+
+Yes
+.............
+#include <bits/stdc++.h>
+using namespace std;
+string add(string a,string b)
+{
+	if(a.size()<b.size()) swap(a,b);
+	int l1=a.size(),l2=b.size(),carry=0;
+	b=string(l1-l2,'0')+b;
+	for(int i=a.size()-1;i>=0;i--)
+	{
+		int s=a[i]-'0'+b[i]-'0'+carry;
+		a[i]=(s%10)+'0';
+		carry=s/10;
+	}
+	if(carry) a='1'+a;
+	return a;
+}
+
+bool check(string s,int start,int l1,int l2)
+{
+	string s1=s.substr(start,l1);
+	string s2=s.substr(start+l1,l2);
+	string s3=add(s1,s2);
+	if(s3==s.substr(start+l1+l2,s3.size()))
+	{
+		if(start+l1+l2+s3.size()==s.size())
+		return true;
+		else return check(s,start+l1,l2,s3.size());
+	}
+	else return false;
+}
+void solve()
+{
+	string s; cin>>s;
+	for(int i=1;i<s.size();i++)
+		{
+			for(int j=1;j+i<=s.size();j++)
+			{
+				if(check(s,0,i,j)) 
+				{
+						cout<<"Yes\n";
+						return;
+				}
+			}
+		}
+		cout<<"No\n";
+}
+int main()
+{
+	int t; cin>>t;
+	while(t--)
+	{
+		solve();
+	}
+}
