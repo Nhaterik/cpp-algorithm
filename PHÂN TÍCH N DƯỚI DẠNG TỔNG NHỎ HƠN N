@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+int cn=0,n,ok,a[21];
+void init()
+{
+	cn=1;
+	a[1]=n;
+}
+void Try()
+{
+	int i=cn;
+	while(i>=1 && a[i]==1)
+        i--;
+	if(i==0) ok=0;
+	else 
+	{
+		a[i]--;
+		int d=cn-i+1;
+		cn=i;
+		int q=d/a[i];
+		int p=d%a[i];
+		if(q)
+		for(int j=1;j<=q;j++) a[++cn]=a[i];
+		if(p)
+		for(int k=1;k<=p;k++) a[++cn]=p;
+	}
+}
+int main()
+{
+	int t;
+	cin >> t;
+	while (t--)
+	{
+
+		cin >> n;
+		ok=1;
+		init();
+		while(ok)
+		{
+			cout<<'(';
+			for(int i=1;i<=cn;i++)
+			cout<<a[i];
+			cout<<") ";
+			
+			Try();
+		}
+		cout<<endl;
+		
+	}
+}
