@@ -1,0 +1,80 @@
+
+
+
+Tìm số nghiệm của phương trình đồng dư x2 = 1(mod) p trong khoảng [1,b].  Ví dụ với b=5, p=7 ta tìm được x = 1 €[1,5] để x2 = 1 %7=1. Với b = 8, p=6 ta tìm được x = {1, 5, 7} để x2 = 1(mod 7).
+
+
+Input:
+
+Dòng đầu tiên đưa vào số lượng test T.
+Những dòng kế tiếp đưa vào các bộ test. Mỗi test là bộ đôi b, p. Các số được viết cách nhau một vài khoảng trống.
+T, b, p thỏa mãn ràng buộc : 1≤T≤100; 0≤b≤109; 1≤ p ≤105.
+Output:
+
+Đưa ra số các số kết quả mỗi test theo từng dòng.
+ideas findng all the elements that is lower than p and canculate the ans by substracting the b-r/p +1 
+Input:
+
+
+
+2
+5 7
+8 6
+
+ Output:
+
+1
+3
+----------
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+ll countSolutions(ll b, ll p)
+{
+	ll ans = 0;
+	vector<ll> residues;
+
+	// Find residues that satisfy x^2 ≡ 1 (mod p)
+	for (ll x = 1; x < p; ++x)
+	{
+		if ((x * x) % p == 1)
+		{
+			residues.push_back(x);
+		}
+	}
+
+	// Count solutions for each residue
+	for (ll r : residues)
+	{
+		// If r > b, break the loop
+		if (r > b)
+			break;
+		// Add the number of solutions for residue r
+		ans += (b - r) / p + 1;
+	}
+
+	return ans;
+}
+
+void process()
+{
+	ll b, p;
+	cin >> b >> p;
+	cout << countSolutions(b, p) << endl;
+}
+
+int main()
+{
+	// ios_base::sync_with_stdio(0);
+	// cin.tie(NULL);
+	// cout.tie(NULL);
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		process();
+	}
+	return 0;
+}
