@@ -1,0 +1,78 @@
+
+
+Given a sequence of positive integers a1, a2, ..., an, you are tasked to write an expression using the numbers in the sequence and the symbols + or - in between them. The goal is to get an expression that evaluates to a given integer k. The problem assures there will always be a solution.
+
+Data Input:
+
+The data for this problem will be provided in a text file named EXPR.INP with the following format:
+
+Line 1: Two space-separated positive integers n (2 ≤ n ≤ 100) and k, where n is the number of elements in the sequence and k is the target value for the expression.
+Line 2: n space-separated positive integers a1, a2, ..., an (1 ≤ ai ≤ 100), representing the sequence.
+Output:
+
+The solution should be written to a text file named EXPR.OUT. This file should contain a single line with n-1 characters. The i-th character should be either '+' or '-', representing the operation symbol placed between the i-th and (i+1)-th elements of the sequence in the expression.
+
+Example:
+
+EXPR.INP
+
+4 2
+1 2 3 4
+EXPR.OUT
+
+++-....
+..............
+
+#include <bits/stdc++.h>
+using namespace std;
+string solve1(int a[], int n, int k)
+{
+    vector<set<int>> check(n + 1);
+    check[1].insert(a[1]);
+    for (int i = 1; i < n; ++i)
+    {
+        for (auto it = check[i].begin(); it != check[i].end(); ++it)
+        {
+            check[i + 1].insert(*it + a[i + 1]);
+            check[i + 1].insert(*it - a[i + 1]);
+        }
+    }
+    string s;
+    long long x = k;
+    for (int i = n; i > 1; --i)
+    {
+        if (check[i].find(x) != check[i].end())
+        {
+            long long x1 = x - a[i];
+            long long x2 = x + a[i];
+            if (check[i - 1].find(x1) != check[i - 1].end())
+            {
+                x = x1;
+                s.push_back('+');
+            }
+            else if (check[i - 1].find(x2) != check[i - 1].end())
+            {
+                x = x2;
+                s.push_back('-');
+            }
+        }
+    }
+    reverse(s.begin(), s.end());
+    return s;
+}
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    int n;
+    long long k;
+    cin >> n >> k;
+    int a[n + 1];
+    for (int i = 1; i <= n; ++i)
+    {
+        cin >> a[i];
+    }
+    cout << solve1(a, n, k);
+    return 0;
+}
