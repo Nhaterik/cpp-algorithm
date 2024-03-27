@@ -1,0 +1,101 @@
+Cho ma trận vuông A[N][N] có các phần tử hoặc là ký tự ‘O’ hoặc là ký tự ‘X’. Hãy tìm cấp của ma trận vuông lớn nhất có các phần tử ‘X’ bao quanh các phần tử ‘O’. Ví dụ với ma trận dưới đây ta sẽ có kết quả là 3.
+
+X         O         X         X         X
+
+X         X         X         X         X
+
+X         X         O         X         O                                
+
+X         X         X         X         X                    
+
+X         X         X         O         O                                
+
+Input:
+
+Dòng đầu tiên đưa vào số lượng bộ test T.
+Những dòng kế tiếp đưa vào T bộ test. Mỗi bộ test gồm hai dòng: Dòng đầu tiên đưa vào số N ; dòng tiếp là N×N các phần tử của ma trận A[][]; các phần tử được viết cách nhau một vài khoảng trống.
+T, N thỏa mãn ràng buộc: 1≤T≤100; 1≤ N ≤20.
+Output:
+
+Đưa ra kết quả mỗi test theo từng dòng.
+Input:
+
+
+
+2
+2
+X X
+
+X X
+4
+X X X O
+
+X O X X
+
+X X X O
+
+X O X X
+Output:
+2
+3
+////
+#include <bits/stdc++.h>
+using namespace std;
+int n;
+char v[21][21];
+int check(int c)
+{
+    for (int i = 1; i <= n - c + 1; i++)
+    {
+        for (int j = 1; j <= n - c + 1; j++)
+        {
+            int h1 = i, h2 = i + c - 1, c1 = j, c2 = j + c - 1, ok = 1;
+            while (h1 == i)
+            {
+                for (int k = c1; k <= c2; k++)
+                    if (v[h1][k] == 'O')
+                        ok = 0;
+                h1++;
+                for (int k = h1; k <= h2; k++)
+                    if (v[k][c2] == 'O')
+                        ok = 0;
+                c2--;
+                for (int k = c2; k >= c1; k--)
+                    if (v[h2][k] == 'O')
+                        ok = 0;
+                h2--;
+                for (int k = h2; k >= h1; k--)
+                    if (v[k][c1] == 'O')
+                        ok = 0;
+                c1++;
+            }
+            if (ok)
+                return 1;
+        }
+    }
+    return 0;
+}
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        cin >> n;
+        for (int i = 1; i <= n; i++)
+            for (int j = 1; j <= n; j++)
+                cin >> v[i][j];
+        int ok=0;
+        for (int i = n; i >= 1; i--)
+        {
+            if (check(i))
+               {
+                 cout << i << endl;
+                 ok=1;
+                 break;
+               }
+        }
+        if(!ok) cout<<'0'<<endl;
+    }
+    return 0;
+}
